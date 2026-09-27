@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  html {
+    scroll-behavior: auto; /* Let Lenis handle smooth scrolling */
+    background-color: #0a0809;
+    color: #fbf7f6;
+  }
+
+  body {
+    background-color: #0a0809;
+    color: #fbf7f6;
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Custom subtle luxury scrollbar */
+  ::-webkit-scrollbar {
+    width: 3px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a0809;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(226, 168, 157, 0.25);
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(226, 168, 157, 0.6);
+  }
+}
+
+/* 35mm Film Grain Overlay */
+.film-grain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 99;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Hide default cursor on desktop when custom cursor is active */
+@media (min-width: 1024px) {
+  .custom-cursor-active, 
+  .custom-cursor-active a, 
+  .custom-cursor-active button,
+  .custom-cursor-active [role="button"] {
+    cursor: none !important;
+  }
+}
+
+:root {
+  --font-primary-heading: 'Syne', sans-serif;
+  --font-primary-accent: 'Cormorant Garamond', serif;
+  --font-primary-body: 'Plus Jakarta Sans', sans-serif;
+  --color-theme-accent: #e2a89d;
+  --color-theme-light: #f9ded8;
+  --color-theme-text: #fbf7f6;
+  --color-theme-bg: #0a0809;
+  --color-theme-glow: rgba(226, 168, 157, 0.35);
+  --scale-typography: 0.78;
+}
+
+/* Luxury Font Utilities using dynamic CSS variables */
+.font-italiana, .font-heading, .font-syne {
+  font-family: var(--font-primary-heading, 'Syne', sans-serif);
+}
+
+.font-playfair, .font-serif {
+  font-family: var(--font-primary-heading, 'Syne', serif);
+}
+
+.font-cormorant {
+  font-family: var(--font-primary-accent, 'Cormorant Garamond', serif);
+}
+
+.font-sans, body {
+  font-family: var(--font-primary-body, 'Plus Jakarta Sans', sans-serif);
+}
+
+.text-theme-accent {
+  color: var(--color-theme-accent, #e2a89d);
+}
+
+.bg-theme-accent {
+  background-color: var(--color-theme-accent, #e2a89d);
+}
+
+.border-theme-accent {
+  border-color: var(--color-theme-accent, #e2a89d);
+}
+
+/* Shimmer Keyframe */
+@keyframes subtleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-subtle-float {
+  animation: subtleFloat 6s ease-in-out infinite;
+}
