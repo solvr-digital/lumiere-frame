@@ -108,17 +108,24 @@ export default function HorizontalGallery({ onOpenLightbox }) {
         scrollTrigger: {
           trigger: container,
           start: 'top top',
-          end: 'bottom bottom',
+          end: () => `+=${Math.max(window.innerHeight * 1.4, (track.scrollWidth - window.innerWidth) * 1.05)}`,
           pin: true,
           scrub: 1,
           invalidateOnRefresh: true,
         }
       });
 
-      // Refresh measurements when images load
+      // Refresh measurements when ready
+      const timer = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 250);
+
       const handleImageLoad = () => ScrollTrigger.refresh();
       window.addEventListener('load', handleImageLoad);
-      return () => window.removeEventListener('load', handleImageLoad);
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener('load', handleImageLoad);
+      };
 
     }, container);
 
@@ -129,8 +136,7 @@ export default function HorizontalGallery({ onOpenLightbox }) {
     <section 
       id="exhibition"
       ref={containerRef} 
-      className="relative w-full bg-[#0a0809] overflow-hidden"
-      style={{ height: '280vh' }}
+      className="relative w-full h-screen bg-[#0a0809] overflow-hidden select-none"
     >
       {/* Background Soft Gallery Illumination */}
       <div 
@@ -145,7 +151,7 @@ export default function HorizontalGallery({ onOpenLightbox }) {
       />
 
       {/* Pinned Viewport Container */}
-      <div className="w-screen h-screen relative overflow-hidden flex flex-col justify-between py-10 px-6 md:px-14 select-none z-10">
+      <div className="w-full h-full relative overflow-hidden flex flex-col justify-between py-8 md:py-10 px-6 md:px-14 select-none z-10">
         
         {/* Gallery Header */}
         <div className="flex items-center justify-between z-20">

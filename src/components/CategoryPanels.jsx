@@ -68,8 +68,8 @@ export default function CategoryPanels({ onOpenLightbox }) {
         scrollTrigger: {
           trigger: container,
           start: 'top top',
-          end: 'bottom bottom',
-          pin: pinSection,
+          end: '+=240%',
+          pin: true,
           scrub: 1,
           onUpdate: (self) => {
             const progress = self.progress;
@@ -157,13 +157,12 @@ export default function CategoryPanels({ onOpenLightbox }) {
     <section 
       id="categories"
       ref={containerRef} 
-      className="relative w-full bg-[#0a0809]"
-      style={{ height: '320vh' }}
+      className="relative w-full h-screen bg-[#0a0809] overflow-hidden flex items-center justify-center select-none"
     >
       {/* Pinned Fullscreen Stage */}
       <div 
         ref={pinSectionRef} 
-        className="w-screen h-screen relative overflow-hidden flex items-center justify-center select-none"
+        className="w-full h-full relative overflow-hidden flex items-center justify-center"
       >
         
         {/* Floating Category Number & Nav Indicator */}

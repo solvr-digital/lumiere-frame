@@ -50,37 +50,39 @@ export default function FullscreenImageReveals({ onOpenLightbox }) {
         const text = item.querySelector('.reveal-text');
         const overlay = item.querySelector('.reveal-mask');
 
-        // Configure different reveal directions
-        let initialClip = 'inset(0% 100% 0% 0%)'; // left-to-right
-        if (index === 1) initialClip = 'inset(100% 0% 0% 0%)'; // bottom-to-top
-        if (index === 2) initialClip = 'inset(35% 35% 35% 35%)'; // center-outward
+        // Configure graceful curtain wipes starting as soon as section enters view
+        let initialClip = 'inset(0% 30% 0% 0%)'; // left-to-right
+        if (index === 1) initialClip = 'inset(25% 0% 0% 0%)'; // bottom-to-top
+        if (index === 2) initialClip = 'inset(15% 15% 15% 15%)'; // center-outward
 
-        // Mask reveal timeline
+        // Mask reveal timeline (starts immediately on entry, never a black blank void)
         gsap.fromTo(overlay, {
           clipPath: initialClip,
+          opacity: 0.8,
         }, {
           clipPath: 'inset(0% 0% 0% 0%)',
-          ease: 'power2.inOut',
+          opacity: 1,
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: item,
-            start: 'top 75%',
-            end: 'top 20%',
-            scrub: 1.2,
+            start: 'top 90%',
+            end: 'top 35%',
+            scrub: 1,
           }
         });
 
         // Image zoom-out & blur reduction
         gsap.fromTo(img, {
-          scale: 1.18,
-          filter: 'blur(10px)',
+          scale: 1.12,
+          filter: 'blur(6px)',
         }, {
           scale: 1.02,
           filter: 'blur(0px)',
           ease: 'power1.out',
           scrollTrigger: {
             trigger: item,
-            start: 'top 80%',
-            end: 'bottom 20%',
+            start: 'top 90%',
+            end: 'bottom 25%',
             scrub: 1,
           }
         });
@@ -88,15 +90,15 @@ export default function FullscreenImageReveals({ onOpenLightbox }) {
         // Text reveal
         gsap.fromTo(text, {
           opacity: 0,
-          y: 40,
+          y: 30,
         }, {
           opacity: 1,
           y: 0,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: item,
-            start: 'top 60%',
-            end: 'top 30%',
+            start: 'top 80%',
+            end: 'top 45%',
             scrub: 1,
           }
         });
@@ -107,20 +109,27 @@ export default function FullscreenImageReveals({ onOpenLightbox }) {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative w-full bg-[#0a0809] text-[#fbf7f6] select-none">
+    <div ref={containerRef} className="relative w-full bg-[#0a0809] text-[#fbf7f6] select-none overflow-hidden">
+      {/* Soft Ambient Glow */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle at 50% 50%, rgba(226, 168, 157, 0.05) 0%, transparent 70%)'
+        }}
+      />
       
       {REVEAL_SECTIONS.map((section, idx) => (
         <section
           key={section.id}
           ref={(el) => (revealsRef.current[idx] = el)}
-          className="relative min-h-[95vh] flex items-center justify-center py-20 px-6 md:px-14 overflow-hidden border-b border-white/5"
+          className="relative min-h-[75vh] flex items-center justify-center py-8 md:py-14 px-6 md:px-14 overflow-hidden border-b border-white/5"
         >
           {/* Main Reveal Frame */}
           <div 
             onClick={() => onOpenLightbox && onOpenLightbox(section.src, section.title, section.caption)}
             data-cursor="view"
             data-cursor-text="INSPECT"
-            className="reveal-mask relative w-full max-w-6xl h-[70vh] sm:h-[80vh] rounded-sm overflow-hidden bg-[#111215] border border-white/10 shadow-[0_20px_80px_rgba(0,0,0,0.9)] cursor-pointer will-change-[clip-path]"
+            className="reveal-mask relative w-full max-w-6xl h-[65vh] sm:h-[75vh] rounded-sm overflow-hidden bg-[#111215] border border-white/10 shadow-[0_20px_80px_rgba(0,0,0,0.9)] cursor-pointer will-change-[clip-path]"
           >
             {/* Inner Image */}
             <img 

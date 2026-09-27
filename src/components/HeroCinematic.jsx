@@ -29,8 +29,8 @@ export default function HeroCinematic() {
         scrollTrigger: {
           trigger: container,
           start: 'top top',
-          end: 'bottom bottom',
-          pin: pinFrame,
+          end: '+=130%',
+          pin: true,
           scrub: 1, // Smooth cinematic scrub
         }
       });
@@ -107,13 +107,12 @@ export default function HeroCinematic() {
     <section 
       id="hero"
       ref={containerRef} 
-      className="relative w-full bg-[#0a0809] text-[#fbf7f6]"
-      style={{ height: '240vh' }}
+      className="relative w-full h-screen bg-[#0a0809] text-[#fbf7f6] overflow-hidden flex items-center justify-center select-none"
     >
-      {/* Pinned Viewport Container */}
+      {/* Viewport Frame */}
       <div 
         ref={pinFrameRef} 
-        className="w-screen h-screen relative overflow-hidden flex items-center justify-center select-none"
+        className="w-full h-full relative overflow-hidden flex items-center justify-center"
       >
         
         {/* Expanding Photography Frame */}

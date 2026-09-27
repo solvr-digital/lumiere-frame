@@ -24,8 +24,8 @@ export default function AboutIntro() {
         scrollTrigger: {
           trigger: container,
           start: 'top top',
-          end: 'bottom bottom',
-          pin: pinSection,
+          end: '+=100%',
+          pin: true,
           scrub: 1,
         }
       });
@@ -78,12 +78,11 @@ export default function AboutIntro() {
     <section 
       id="about"
       ref={containerRef} 
-      className="relative w-full bg-[#0a0809] text-[#fbf7f6]"
-      style={{ height: '170vh' }}
+      className="relative w-full h-screen bg-[#0a0809] text-[#fbf7f6] overflow-hidden flex items-center justify-center select-none"
     >
       <div 
         ref={pinSectionRef} 
-        className="w-screen h-screen relative overflow-hidden flex items-center justify-center select-none"
+        className="w-full h-full relative overflow-hidden flex items-center justify-center select-none"
       >
         {/* Ambient Luxury Background with Champagne Glow (Prevents raw black screen) */}
         <div 
